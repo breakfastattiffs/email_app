@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>To:</strong>
+  <%= @email.to %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @email.subject %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @email.body %>
+</p>
+
+<p>
+  <strong>Attachments:</strong>
+  <%= @email.attachment %>
+</p>
+
+<p>
+  <strong>Message Id:</strong>
+  <%= @email.message_id %>
+</p>
+
+<p>
+  <strong>Sending Service:</strong>
+  <%= @email.sending_service %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @email.status %>
+</p>
+
+<%= link_to 'Back', emails_path %>

@@ -1,0 +1,12 @@
+mailgun:
+  api_key: key-a90d743eaf588cb1b2caea0671225bf4
+  api_base_url: https://api.mailgun.net/v2/sandbox5550f9437950483eb57f7a6daa2c8f13.mailgun.org/
+  api_user: api
+  default_sender: postmaster@sandbox5550f9437950483eb57f7a6daa2c8f13.mailgun.org
+
+
+mandrill:
+  api_key: P0MmT5x_lJb5Di0kw45B5Q
+  api_base_url: https://mandrillapp.com/api/1.0/
+  default_sender: postmaster@sandbox5550f9437950483eb57f7a6daa2c8f13.mailgun.org
+
