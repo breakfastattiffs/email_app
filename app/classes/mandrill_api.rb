@@ -65,13 +65,16 @@ class MandrillApi
                          "subject" => "#{email_params[:subject]}",
                          "from_email" => from_email.address,
                          "to" => addresses,
-                         "attachments" => attachments
+                         "attachments" => nil
                      },
                  "async" => false,
                  "helloworld" => true
     }
     json_body["message"]["from_name"] = from_email.display_name if from_email.display_name.present?
+    @logger.debug("Mandrill email body:")
+    @logger.debug json_body
 
+    json_body["message"]["attachments"] = attachments
 
     return json_body.to_json
   end
