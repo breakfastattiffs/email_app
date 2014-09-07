@@ -30,6 +30,7 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
+    @email = Email.new(email_params)
     # @attachment_location = Rails.root.join('public', 'uploads').to_s
     #
     # attachments = email_params[:attachment]
