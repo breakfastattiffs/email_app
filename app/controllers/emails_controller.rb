@@ -30,17 +30,17 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
-    @attachment_location = Rails.root.join('public', 'uploads').to_s
-
-    attachments = email_params[:attachment]
-    if attachments
-      @file_id = Time.now.to_i.to_s
-      attachments.map do |a|
-        File.open(File.join(@attachment_location, @file_id + a.original_filename), 'wb') do |file|
-          file.write(a.read)
-        end
-      end
-    end
+    # @attachment_location = Rails.root.join('public', 'uploads').to_s
+    #
+    # attachments = email_params[:attachment]
+    # if attachments
+    #   @file_id = Time.now.to_i.to_s
+    #   attachments.map do |a|
+    #     File.open(File.join(@attachment_location, @file_id + a.original_filename), 'wb') do |file|
+    #       file.write(a.read)
+    #     end
+    #   end
+    # end
 
     parsed_address_list = Mail::AddressList.new(email_params[:to])
     attachment_string = email_params[:attachment].map do |file|
@@ -51,7 +51,7 @@ class EmailsController < ApplicationController
       email = email_params
       email[:to] = a.to_s
       email[:attachment] = attachment_string
-      email[:attachment_id] = @file_id
+      #email[:attachment_id] = @file_id
       @email = Email.create(email)
       api_params = email_params
       api_params[:to] = a.to_s
