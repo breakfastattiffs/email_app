@@ -23,7 +23,6 @@ class GenericEmailProvider
 
     # Check on the status of the message
     if state == Email::Status::SENDING
-      @logger.debug "Forked pid #{p1} to check on status of mandrill email"
       p1 = Process.fork do
         begin
           Timeout::timeout(300) {
@@ -43,6 +42,8 @@ class GenericEmailProvider
           backup_send_message(opts, email)
         end
       end
+      @logger.debug "Forked pid #{p1} to check on status of mandrill email"
+
       Process.detach p1
     elsif state == Email::Status::TRY_AGAIN
       # Send using mailgun since sending with mandrill failed
@@ -54,12 +55,10 @@ class GenericEmailProvider
     @mailgun_api ||= MailgunApi.new(@config_file[:mailgun])
 
     @logger.debug "Sending backup email..."
-    @logger.debug "Send email using mailgun. Fork a process pid #{p1}."
     p1 = Process.fork do
       state, id, service = @mailgun_api.send_message(email_params)
       update_email(email, state, id, service)
 
-      @logger.debug "Forked to check on status of mailgun email: #{p2}"
       p2 = Process.fork do
         begin
           Timeout::timeout(600) {
@@ -75,8 +74,12 @@ class GenericEmailProvider
 
         update_email(email, state, id, service)
       end
+      @logger.debug "Forked to check on status of mailgun email: #{p2}"
+
       Process.detach p2
     end
+    @logger.debug "Send email using mailgun. Fork a process pid #{p1}."
+
     Process.detach p1
   end
 
