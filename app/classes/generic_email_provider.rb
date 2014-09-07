@@ -16,8 +16,9 @@ class GenericEmailProvider
 
   def send_message(opts={}, email)
     @mandrill_api = MandrillApi.new(@config_file[:mandrill])
-    #TODO change back
-    state, id, service = [Email::Status::TRY_AGAIN, 'testid', 'testservice'] #@mandrill_api.send_message(opts)
+    #
+    # [Email::Status::TRY_AGAIN, 'testid', 'testservice']
+    state, id, service = @mandrill_api.send_message(opts)
     update_email(email, state, id, service)
 
     # Check on the status of the message

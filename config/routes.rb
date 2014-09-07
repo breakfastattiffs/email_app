@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root "emails#index"
   resources :emails, except: [:update, :edit]
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -114,6 +114,13 @@ class MandrillApi
     return [state, id, self.to_s]
   end
 
+  def send_single_message
+    parsed_address_list = Mail::AddressList.new(email_params[:to])
+    attachment_string = email_params[:attachment].map do |file|
+      file.original_filename
+    end.join(",\n") if email_params[:attachment]
+  end
+
   def get_message_status(id)
     @logger.debug("#{self.to_s}: Get message status of #{id}")
     json = {"key" => @key, "id" => id}
