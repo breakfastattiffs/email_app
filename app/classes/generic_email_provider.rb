@@ -53,7 +53,7 @@ class GenericEmailProvider
   def backup_send_message(email_params, email)
     @mailgun_api ||= MailgunApi.new(@config_file[:mailgun])
 
-    puts "Sending backup email..."
+    @logger.debug "Sending backup email..."
     p1 = Process.fork do
       state, id, service = @mailgun_api.send_message(email_params)
       update_email(email, state, id, service)
