@@ -1,1 +1,1 @@
-json.extract! @email, :id, :to, :subject, :body, :created_at, :updated_at
+json.extract! @email, :id, :to, :subject, :body, :attachment, :status, :sending_service, :updated_at

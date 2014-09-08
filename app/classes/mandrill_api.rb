@@ -40,7 +40,6 @@ class MandrillApi
     # Get from email
     from_email = Mail::Address.new(email_params[:from] || @sender)
 
-    # TODO do not create the attachments body multiple times
     # list of attachments in json format
     attachments = email_params[:attachment]
     attachments = if attachments

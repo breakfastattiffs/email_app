@@ -126,6 +126,7 @@ class MailgunApi
       @logger.debug("Response body: #{response.body}")
       return [Email::Status::FAILED, id, self.to_s]
     end
+    # See if the query returned any email matches in "items" field
     if JSON.parse(response.body)['items'].any?
       return [Email::Status::FAILED, id, self.to_s]
     end
@@ -138,6 +139,7 @@ class MailgunApi
       @logger.debug("Response body: #{response.body}")
       return [Email::Status::FAILED, id, self.to_s]
     end
+    # See if the query returned any email matches in "items" field
     if JSON.parse(response.body)["items"].any?
       return [Email::Status::SENT, id, self.to_s]
     end

@@ -69,7 +69,7 @@ class GenericEmailProvider
           }
         rescue Timeout::Error => e
           @logger.error("Timed out checking status for email sent using mailgun")
-          exit
+          state = Email::Status::FAILED
         end
 
         update_email(email, state, id, service)
