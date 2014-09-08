@@ -40,7 +40,7 @@ class MandrillApi
     # Get from email
     from_email = Mail::Address.new(email_params[:from] || @sender)
 
-    # TODO do not creae teh attachments body multiple times
+    # TODO do not create the attachments body multiple times
     # list of attachments in json format
     attachments = email_params[:attachment]
     attachments = if attachments
@@ -83,14 +83,16 @@ class MandrillApi
     body = create_send_message_body(email_params)
     response = HttpUtils.http_post(send_message_url, body, :content_type => @content_type)
     @logger.debug("Post to #{send_message_url}")
+    @logger.debug("#{self.to_s}. Response code: #{response.code}")
+
     state = Email::Status::SENDING
     id = nil
     if not response.code =~ /200/
-      @logger.debug("#{self.to_s}. Response code: #{response.code}")
       @logger.debug("#{self.to_s}. Response body: #{response.body}")
       state = Email::Status::TRY_AGAIN
     else
       response_body = JSON.parse(response.body)
+      @logger.debug("#{self.to_s}. Response body: #{response_body}")
       if response_body.is_a? Hash
         # hash response means there is an error
         state = Email::Status::TRY_AGAIN
